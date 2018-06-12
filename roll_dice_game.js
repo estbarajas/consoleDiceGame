@@ -2,7 +2,7 @@ function runGame () {
 
 	let continueDialogue = true;
 	while (continueDialogue) {
-		console.log("what destination would you like to travel too?");
+		console.log("What destination would you like to travel too?");
 		let destination = prompt("A) Rocky hills\nB) Elemental square\nC) Dark caves").toLowerCase();
 
 		if (destination === "a") {
@@ -21,6 +21,9 @@ function runGame () {
 			console.log("That is not a destination.");
 		}
 	}
+
+	let monster = (randomMonster().name);
+	console.log("A " + monster + " has spawned.");
 }
 
 function rollDice (numberOfSides) {
@@ -37,7 +40,7 @@ function randomMonster () {
 	let monsterArray = [monsters.goblin, monsters.troll, monsters.mage];
 	let randomMonsterGenerator = Math.floor(Math.random() * monsterArray.length);
 	let temporaryMonster = monsterArray[randomMonsterGenerator];
-	console.log(temporaryMonster);
+	//console.log(temporaryMonster);
 	return temporaryMonster;
 }
 
