@@ -1,7 +1,27 @@
 function runGame () {
-	console.log("what destination would you like to travel too?");
-	prompt("A) Rocky hills\nB) Elemental square\nC) Dark caves");
-	console.log("You arrived at: ");
+
+	let continueDialogue = true;
+	while (continueDialogue) {
+		console.log("what destination would you like to travel too?");
+		let destination = prompt("A) Rocky hills\nB) Elemental square\nC) Dark caves").toLowerCase();
+
+		if (destination === "a") {
+		console.log("You arrived at: Rocky hills");
+		continueDialogue = false;
+		}
+		else if (destination === "b") {
+			console.log("You arrived at: Elemental square");
+			continueDialogue = false;
+		}
+		else if (destination === "c") {
+			console.log("You arrived at: Dark caves");
+			continueDialogue = false;
+		}
+		else {
+			console.log("ENTER A VIABLE ANSWER!!!!!!!!!!!");
+		}
+	}
+	console.log("Exited");
 }
 
 function rollDice (numberOfSides) {
