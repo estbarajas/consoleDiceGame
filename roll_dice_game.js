@@ -23,7 +23,7 @@ function runGame () {
 	}
 
 	let monster = (randomMonster().name);
-	console.log("A " + monster + " has spawned.");
+	console.log("\nA " + monster + " has spawned!");
 }
 
 function rollDice (numberOfSides) {
@@ -42,6 +42,11 @@ function randomMonster () {
 	let temporaryMonster = monsterArray[randomMonsterGenerator];
 	//console.log(temporaryMonster);
 	return temporaryMonster;
+}
+
+function player () {
+	let player = {name:"Warrior", health:100, armor:10};
+	return player;
 }
 
 function combat () {
