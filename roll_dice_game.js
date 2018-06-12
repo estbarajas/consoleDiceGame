@@ -1,7 +1,7 @@
 function runGame () {
 	console.log("what destination would you like to travel too?");
-	console.log("A) Rocky hills\nB) Elemental square\nC) Dark caves");
-	//combat();	
+	prompt("A) Rocky hills\nB) Elemental square\nC) Dark caves");
+	console.log("You arrived at: ");
 }
 
 function rollDice (numberOfSides) {
