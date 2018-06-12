@@ -24,6 +24,9 @@ function runGame () {
 
 	let monster = (randomMonster().name);
 	console.log("\nA " + monster + " has spawned!");
+
+	console.log("---------\n\n");
+	combat();
 }
 
 function rollDice (numberOfSides) {
@@ -45,27 +48,39 @@ function randomMonster () {
 }
 
 function player () {
-	let player = {name:"Warrior", health:100, armor:10};
+	let player = {name:"Warrior", health:100, armor:10, fish:1};
 	return player;
 }
 
 function combat () {
 	let theMonster = randomMonster();
-	// console.log("Name: " + theMonster.name);
-	// console.log("Damage: " + theMonster.damage);
-	// console.log("Gold: " + theMonster.gold);
+	let thePlayer = player();
+
+
+	console.log(thePlayer);
+
+	console.log("ateFish")
+
+	//useFish()
+	thePlayer.health = useFish(thePlayer);
+	
+
+	//thePlayer.health = thePlayer.health + 5;
+
+	console.log(thePlayer);
+	console.log("Name: " + thePlayer.name);
+	console.log("Health: " + thePlayer.health);
+	
 }
 
-function checkFood () {
-
+function useFish (obj) {
+	let thePlayerHealth = obj.health;
+	thePlayerHealth = thePlayerHealth + 55;
+	return thePlayerHealth;
 }
 
-function useFood () {
 
-}
 
-function attack () {
 
-}
 
 runGame();
