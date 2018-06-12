@@ -6,22 +6,21 @@ function runGame () {
 		let destination = prompt("A) Rocky hills\nB) Elemental square\nC) Dark caves").toLowerCase();
 
 		if (destination === "a") {
-		console.log("You arrived at: Rocky hills");
+		console.log("You arrived at: Rocky hills.");
 		continueDialogue = false;
 		}
 		else if (destination === "b") {
-			console.log("You arrived at: Elemental square");
+			console.log("You arrived at: Elemental square.");
 			continueDialogue = false;
 		}
 		else if (destination === "c") {
-			console.log("You arrived at: Dark caves");
+			console.log("You arrived at: Dark caves.");
 			continueDialogue = false;
 		}
 		else {
-			console.log("ENTER A VIABLE ANSWER!!!!!!!!!!!");
+			console.log("That is not a destination.");
 		}
 	}
-	console.log("Exited");
 }
 
 function rollDice (numberOfSides) {
