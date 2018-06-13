@@ -1,11 +1,5 @@
 function runGame () {
-
-	
-
-	//let monster = (randomMonster().name);
-	//console.log("\nA " + monster + " has spawned!");
-
-	//console.log("---------\n\n");
+	introDialogue();
 	combat();
 }
 
@@ -16,19 +10,19 @@ function introDialogue (){
 		let destination = prompt("A) Rocky hills\nB) Elemental square\nC) Dark caves").toLowerCase();
 
 		if (destination === "a") {
-		console.log("You arrived at: Rocky hills.");
+		console.log("You arrived at: Rocky hills.\n\n");
 		continueDialogue = false;
 		}
 		else if (destination === "b") {
-			console.log("You arrived at: Elemental square.");
+			console.log("You arrived at: Elemental square.\n\n");
 			continueDialogue = false;
 		}
 		else if (destination === "c") {
-			console.log("You arrived at: Dark caves.");
+			console.log("You arrived at: Dark caves.\n\n");
 			continueDialogue = false;
 		}
 		else {
-			console.log("That is not a destination.");
+			console.log("That is not a destination.\n\n");
 		}
 	}
 }
@@ -60,7 +54,9 @@ function combat () {
 	let theMonster = randomMonster();
 	let thePlayer = player();
 
-	console.log(thePlayer);
+	//console.log("\nA " + monster + " has spawned!");
+
+	//console.log(thePlayer);
 	//console.log("Name: " + thePlayer.name);
 	//console.log("Health: " + thePlayer.health);
 	
