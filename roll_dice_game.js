@@ -56,6 +56,7 @@ function combat () {
 	let thePlayer = player();
 	let monsterNotDead = true;
 	let offensivePlayDialogue = true;
+	let defensivePlayDialogue = true;
 
 	console.log("Warning: "+ "A " + theMonster.name + " has spawned!\n\n");
 	//getStats(theMonster);
@@ -76,7 +77,9 @@ function combat () {
 				else {
 					console.log("The " + theMonster.name + " is dead!");
 					monsterNotDead = false;
-					break;
+					offensivePlayDialogue = false;
+					defensivePlayDialogue = false;
+					//break;
 				}
 			}
 			else if (decisionToAttack === "b") {
@@ -86,14 +89,22 @@ function combat () {
 				console.log(" ");
 			}
 			else {
-				console.log("\nNot a valid option.\n\n");
+				console.log("Not a valid option.\n\n");
 			}
 		}
 		//console.log("\nExited once.")
 
-		// while (true) {
-		// 	break;
-		// }
+		while (defensivePlayDialogue) {
+
+			// while (true) {
+
+			// }
+			console.log("Warning: The " + theMonster.name + " is charging an attack...\n");
+			console.log("What would you like to do?");
+			console.log("A) Attempt to block attack. " + "B) Eat fish to heal. " + "C) Repair Armor. " + "D) Nothing.");
+			console.log(" ");
+			break;
+		}
 	}
 
 	console.log("Exited succesfully.");
