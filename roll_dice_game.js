@@ -28,10 +28,6 @@ function introDialogue () {
 	}
 }
 
-function offensiveDialogue () {
-
-}
-
 function rollDice (numberOfSides) {
 	let randomNumber = Math.floor(Math.random() * numberOfSides) + 1;
 	return randomNumber;
@@ -59,39 +55,48 @@ function combat () {
 	let theMonster = randomMonster();
 	let thePlayer = player();
 	let monsterNotDead = true;
-	let continueDialogue = true;
+	let offensivePlayDialogue = true;
 
 	console.log("Warning: "+ "A " + theMonster.name + " has spawned!\n\n");
 	//getStats(theMonster);
 	//getStats(thePlayer);
 
 	while (monsterNotDead) {
-
-		while (continueDialogue) {
-			console.log("Would you like to attack?");
+		while (offensivePlayDialogue) {
+			console.log("Would you like to attack?\n\n");
 			let decisionToAttack = prompt("A) Yes, attack enemy!\nB) Not yet, check stats.\n").toLowerCase();
-			
+
 			if (decisionToAttack === "a") {
 				let initialMonsterHealth = theMonster.health;
 				theMonster.health = attack(theMonster, thePlayer.damage);
-				console.log("The " + theMonster.name + " has " + theMonster.health + "/" + initialMonsterHealth + " health left.")
-				continueDialogue = false;
+				if (!(theMonster.health <= 0)) {
+					console.log("The " + theMonster.name + " has " + theMonster.health + "/" + initialMonsterHealth + " health left.\n\n");
+					break;
+				}
+				else {
+					console.log("The " + theMonster.name + " is dead!");
+					monsterNotDead = false;
+					break;
+				}
 			}
 			else if (decisionToAttack === "b") {
-				console.log("\nStats:");
+				console.log("Stats:");
 				getStats(theMonster);
 				getStats(thePlayer);
-				continueDialogue = false;
+				console.log(" ");
 			}
 			else {
-				console.log("Not a valid option.\n\n");
+				console.log("\nNot a valid option.\n\n");
 			}
 		}
-		console.log("\nExited once.")
-		monsterNotDead = false;
+		//console.log("\nExited once.")
+
+		// while (true) {
+		// 	break;
+		// }
 	}
 
-	console.log("Exited twice");
+	console.log("Exited succesfully.");
 
 
 	//console.log(thePlayer);
