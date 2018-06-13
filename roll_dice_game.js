@@ -1,4 +1,5 @@
 function runGame () {
+	console.log("Adventures of a brave WARRIOR!\n\n");
 	introDialogue();
 	combat();
 }
@@ -46,7 +47,7 @@ function randomMonster () {
 }
 
 function player () {
-	let player = {name:"Warrior", health:100, armor:10, fishPieces:1};
+	let player = {name:"Warrior", health:100, armor:10, fishPieces:1, gold:10};
 	return player;
 }
 
@@ -54,7 +55,11 @@ function combat () {
 	let theMonster = randomMonster();
 	let thePlayer = player();
 
-	//console.log("\nA " + monster + " has spawned!");
+	console.log("Warning: "+ "A " + theMonster.name + " has spawned!\n\n");
+	getStats(theMonster);
+	getStats(thePlayer);
+
+	console.log("\nWhat action would you like to perform?");
 
 	//console.log(thePlayer);
 	//console.log("Name: " + thePlayer.name);
@@ -91,9 +96,16 @@ function useFish (obj) { //to do: make health increase random with rollDice()
 	return thePlayerHealth;
 }
 
-function checkStats (obj) { //fix armor status
-	let thePlayer = obj;
-	console.log("Health points: " + thePlayer.health + " | Fish pieces: " + thePlayer.fishPieces + " | Armor status: Broken");
+function getStats (obj) { //fix armor status
+	let theObject = obj;
+
+	if(theObject.name === "Warrior") {
+		console.log("Warrior stats (You): " + "Health points: " + theObject.health + " | Fish pieces: " + theObject.fishPieces + " | Gold owned: "  + theObject.gold + " | Armor status: Broken");
+	}
+	else {
+		console.log(theObject.name + " stats: " + "Health points: " + theObject.health + " | Base Damage: " + theObject.damage + " | Gold drop: " + theObject.gold);
+	}
+	
 }
 
 function attack (obj) { //if monster less dmg then warrior
