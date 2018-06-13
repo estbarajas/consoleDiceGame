@@ -60,6 +60,13 @@ function combat () {
 	console.log("Name: " + thePlayer.name);
 	console.log("Health: " + thePlayer.health);
 
+	//console.log("Armor blocks: ");
+	block(thePlayer);
+	console.log("----");
+	block(thePlayer);
+
+
+
 	// useFish()
 	// thePlayer.health = useFish(thePlayer);
 
@@ -70,7 +77,7 @@ function combat () {
 	//checkStats(thePlayer);	
 
 	//attack()
-	attack(theMonster);
+	//theMonster.health = attack(theMonster);
 }
 
 function buyFish (obj) { //to do: lower players gold randomly
@@ -91,10 +98,25 @@ function checkStats (obj) { //fix armor status
 }
 
 function attack (obj) { //if monster less dmg then warrior
-	theAttackerHealth = obj.health;
+	let theAttackerHealth = obj.health;
 	theAttackerHealth -= 53;
 	return theAttackerHealth;
 }
+
+function block () { //return it onto the attack calculation!!
+	let probabilityOfBlock = rollDice(2);
+	if (probabilityOfBlock >= 2) {
+		console.log("You blocked the attack!");
+	}
+	else {
+		console.log("Rekt m8 :(");
+	}
+}
+
+// function armorBreak(){
+// 	let armorBreakProbability = rollDice(6);
+// }
+
 
 
 
