@@ -4,7 +4,7 @@ function runGame () {
 	combat();
 }
 
-function introDialogue (){
+function introDialogue () {
 	let continueDialogue = true;
 	while (continueDialogue) {
 		console.log("What destination would you like to travel too?");
@@ -26,6 +26,10 @@ function introDialogue (){
 			console.log("That is not a destination.\n\n");
 		}
 	}
+}
+
+function offensiveDialogue () {
+
 }
 
 function rollDice (numberOfSides) {
@@ -54,12 +58,39 @@ function player () {
 function combat () {
 	let theMonster = randomMonster();
 	let thePlayer = player();
+	let monsterNotDead = true;
+	let continueDialogue = true;
 
 	console.log("Warning: "+ "A " + theMonster.name + " has spawned!\n\n");
-	getStats(theMonster);
-	getStats(thePlayer);
+	//getStats(theMonster);
+	//getStats(thePlayer);
 
-	console.log("\nWhat action would you like to perform?");
+	while (monsterNotDead) {
+
+		while (continueDialogue) {
+			console.log("Would you like to attack?");
+			let decisionToAttack = prompt("A) Yes, attack enemy!\nB) Not yet, check stats.\n").toLowerCase();
+			
+			if (decisionToAttack === "a") {
+				console.log("You attacked. Bye.")
+				continueDialogue = false;
+			}
+			else if (decisionToAttack === "b") {
+				console.log("\nStats:");
+				getStats(theMonster);
+				getStats(thePlayer);
+				continueDialogue = false;
+			}
+			else {
+				console.log("Not a valid option.");
+			}
+		}
+		console.log("\nExited once.")
+		monsterNotDead = false;
+	}
+
+	console.log("Exited twice");
+
 
 	//console.log(thePlayer);
 	//console.log("Name: " + thePlayer.name);
