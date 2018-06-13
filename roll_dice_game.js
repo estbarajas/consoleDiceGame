@@ -7,7 +7,7 @@ function introDialogue () {
 	let continueDialogue = true;
 	console.log("Adventures of a brave WARRIOR!\n\n");
 	while (continueDialogue) {
-		console.log("What destination would you like to travel too?");
+		console.log("What destination would you like to travel to?");
 		let destination = prompt("A) Rocky hills\nB) Elemental square\nC) Dark caves").toLowerCase();
 
 		if (destination === "a") {
@@ -57,6 +57,7 @@ function combat () {
 	let monsterNotDead = true;
 	let offensivePlayDialogue = true;
 	let defensivePlayDialogue = true;
+	let defensiveInnerLoop = true;
 
 	console.log("Warning: "+ "A " + theMonster.name + " has spawned!\n\n");
 	//getStats(theMonster);
@@ -64,7 +65,7 @@ function combat () {
 
 	while (monsterNotDead) {
 		while (offensivePlayDialogue) {
-			console.log("Would you like to attack?\n\n");
+			console.log("Would you like to attack the " + theMonster.name + "?\n\n");
 			let decisionToAttack = prompt("A) Yes, attack enemy!\nB) Not yet, check stats.\n").toLowerCase();
 
 			if (decisionToAttack === "a") {
@@ -79,6 +80,7 @@ function combat () {
 					monsterNotDead = false;
 					offensivePlayDialogue = false;
 					defensivePlayDialogue = false;
+					defensiveInnerLoop = false;
 					//break;
 				}
 			}
@@ -95,13 +97,34 @@ function combat () {
 		//console.log("\nExited once.")
 
 		while (defensivePlayDialogue) {
+			console.log("Warning: The " + theMonster.name + " is charging an attack...\n\n");
+			
+			
+			while (defensiveInnerLoop) {
+				console.log("What would you like to do?");
+				let defensiveDecision = prompt("A) Attempt to block attack.\nB) Eat fish to heal.\nC) Repair Armor.\nD) Nothing.").toLowerCase();
 
-			// while (true) {
+				if (defensiveDecision === "a") {
+				console.log("Choose option A.");
+					break;
+				}
+				else if (defensiveDecision === "b") {
+					console.log("Choose option B.");
+					break;
+				}
+				else if (defensiveDecision === "c") {
+					console.log("Choose option C.");
+					break;
+				}
+				else if (defensiveDecision === "d") {
+					console.log("Choose option D.");
+					break;
+				}
+				else {
+					console.log("Not a valid option.\n\n");
+				}
+			}
 
-			// }
-			console.log("Warning: The " + theMonster.name + " is charging an attack...\n");
-			console.log("What would you like to do?");
-			console.log("A) Attempt to block attack. " + "B) Eat fish to heal. " + "C) Repair Armor. " + "D) Nothing.");
 			console.log(" ");
 			break;
 		}
