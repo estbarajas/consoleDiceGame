@@ -36,9 +36,9 @@ function rollDice (numberOfSides) {
 
 function randomMonster () {
 	let monsters = {
-		goblin : {name:"Goblin", damage:5, gold:20},
-		troll : {name:"Troll", damage:10, gold:25},
-		mage : {name:"Mage", damage:15, gold:30,},
+		goblin : {name:"Goblin", health:100, damage:5, gold:20},
+		troll : {name:"Troll", health:100, damage:10, gold:25},
+		mage : {name:"Mage", health:100, damage:15, gold:30,},
 	};
 	let monsterArray = [monsters.goblin, monsters.troll, monsters.mage];
 	let randomMonsterGenerator = Math.floor(Math.random() * monsterArray.length);
@@ -48,7 +48,7 @@ function randomMonster () {
 }
 
 function player () {
-	let player = {name:"Warrior", health:100, armor:10, fish:1};
+	let player = {name:"Warrior", health:100, armor:10, fishPieces:1};
 	return player;
 }
 
@@ -56,30 +56,45 @@ function combat () {
 	let theMonster = randomMonster();
 	let thePlayer = player();
 
-
-	console.log(thePlayer);
-
-	console.log("ateFish")
-
-	//useFish()
-	thePlayer.health = useFish(thePlayer);
-	
-
-	//thePlayer.health = thePlayer.health + 5;
-
 	console.log(thePlayer);
 	console.log("Name: " + thePlayer.name);
 	console.log("Health: " + thePlayer.health);
-	
+
+	// useFish()
+	// thePlayer.health = useFish(thePlayer);
+
+	// buyFish()
+	// thePlayer.fishPieces = buyFish(thePlayer);
+
+	//checkStats()
+	//checkStats(thePlayer);	
+
+	//attack()
+	attack(theMonster);
 }
 
-function useFish (obj) {
+function buyFish (obj) { //to do: lower players gold randomly
+	let thePlayerFishPieces = obj.fishPieces;
+	thePlayerFishPieces += 1;
+	return thePlayerFishPieces;
+}
+
+function useFish (obj) { //to do: make health increase random with rollDice()
 	let thePlayerHealth = obj.health;
-	thePlayerHealth = thePlayerHealth + 55;
+	thePlayerHealth += 55;
 	return thePlayerHealth;
 }
 
+function checkStats (obj) { //fix armor status
+	let thePlayer = obj;
+	console.log("Health points: " + thePlayer.health + " | Fish pieces: " + thePlayer.fishPieces + " | Armor status: Broken");
+}
 
+function attack (obj) { //if monster less dmg then warrior
+	theAttackerHealth = obj.health;
+	theAttackerHealth -= 53;
+	return theAttackerHealth;
+}
 
 
 
