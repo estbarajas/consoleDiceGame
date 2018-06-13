@@ -1,5 +1,15 @@
 function runGame () {
 
+	
+
+	//let monster = (randomMonster().name);
+	//console.log("\nA " + monster + " has spawned!");
+
+	//console.log("---------\n\n");
+	combat();
+}
+
+function introDialogue (){
 	let continueDialogue = true;
 	while (continueDialogue) {
 		console.log("What destination would you like to travel too?");
@@ -21,12 +31,6 @@ function runGame () {
 			console.log("That is not a destination.");
 		}
 	}
-
-	let monster = (randomMonster().name);
-	console.log("\nA " + monster + " has spawned!");
-
-	console.log("---------\n\n");
-	combat();
 }
 
 function rollDice (numberOfSides) {
@@ -57,16 +61,9 @@ function combat () {
 	let thePlayer = player();
 
 	console.log(thePlayer);
-	console.log("Name: " + thePlayer.name);
-	console.log("Health: " + thePlayer.health);
-
-	//console.log("Armor blocks: ");
-	block(thePlayer);
-	console.log("----");
-	block(thePlayer);
-
-
-
+	//console.log("Name: " + thePlayer.name);
+	//console.log("Health: " + thePlayer.health);
+	
 	// useFish()
 	// thePlayer.health = useFish(thePlayer);
 
@@ -78,6 +75,12 @@ function combat () {
 
 	//attack()
 	//theMonster.health = attack(theMonster);
+
+	//block()
+	//block(thePlayer);
+
+	//breakArmor()
+	//breakArmor(thePlayer);
 }
 
 function buyFish (obj) { //to do: lower players gold randomly
@@ -114,7 +117,7 @@ function block () { //return it onto the attack calculation!! blocked dmg to can
 	}
 }
 
-function breakArmor (obj) { //call it within block?
+function breakArmor (obj) { //call it within block? possibly return boolean?
 	let thePlayerArmor = obj.armor;
 	let probabilityOfArmorBreaking = rollDice(4);
 	 if (probabilityOfArmorBreaking >= 4) {
@@ -124,12 +127,5 @@ function breakArmor (obj) { //call it within block?
 	 	console.log("Your armor did not break! =]")
 	 }
 }
-
-// function armorBreak(){
-// 	let armorBreakProbability = rollDice(6);
-// }
-
-
-
 
 runGame();
