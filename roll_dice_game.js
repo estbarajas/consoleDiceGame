@@ -39,9 +39,9 @@ function rollDice (numberOfSides) {
 
 function randomMonster () {
 	let monsters = {
-		goblin : {name:"Goblin", health:100, damage:5, gold:20},
-		troll : {name:"Troll", health:100, damage:10, gold:25},
-		mage : {name:"Mage", health:100, damage:15, gold:30,},
+		goblin : {name:"Goblin", health:125, damage:5, gold:20},
+		troll : {name:"Troll", health:135, damage:10, gold:25},
+		mage : {name:"Mage", health:145, damage:15, gold:30,},
 	};
 	let monsterArray = [monsters.goblin, monsters.troll, monsters.mage];
 	let randomMonsterGenerator = Math.floor(Math.random() * monsterArray.length);
@@ -51,7 +51,7 @@ function randomMonster () {
 }
 
 function player () {
-	let player = {name:"Warrior", health:100, armor:10, fishPieces:1, gold:10};
+	let player = {name:"Warrior", health:100, armor:10, fishPieces:1, gold:10, damage:5};
 	return player;
 }
 
@@ -72,7 +72,13 @@ function combat () {
 			let decisionToAttack = prompt("A) Yes, attack enemy!\nB) Not yet, check stats.\n").toLowerCase();
 			
 			if (decisionToAttack === "a") {
-				console.log("You attacked. Bye.")
+				console.log("You attacked.");
+				//console.log("Health before attack:" + theMonster.health);
+				console.log(theMonster);
+				theMonster.health = attack(theMonster, thePlayer.damage);
+				console.log("------------");
+				//console.log("Health after attack:" + theMonster.health);
+				console.log(theMonster);
 				continueDialogue = false;
 			}
 			else if (decisionToAttack === "b") {
@@ -82,7 +88,7 @@ function combat () {
 				continueDialogue = false;
 			}
 			else {
-				console.log("Not a valid option.");
+				console.log("Not a valid option.\n\n");
 			}
 		}
 		console.log("\nExited once.")
@@ -139,9 +145,13 @@ function getStats (obj) { //fix armor status
 	
 }
 
-function attack (obj) { //if monster less dmg then warrior
+function attack (obj, damage) { //if monster less dmg then warrior
 	let theAttackerHealth = obj.health;
-	theAttackerHealth -= 53;
+	let baseDamage = damage;
+	let bonusDamage = rollDice(10);
+	let totalDamage = baseDamage + bonusDamage;
+	console.log("The attack did: " + totalDamage + " damage.");
+	theAttackerHealth -= totalDamage;
 	return theAttackerHealth;
 }
 
