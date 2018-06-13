@@ -103,14 +103,26 @@ function attack (obj) { //if monster less dmg then warrior
 	return theAttackerHealth;
 }
 
-function block () { //return it onto the attack calculation!!
+function block () { //return it onto the attack calculation!! blocked dmg to cancel attack...
 	let probabilityOfBlock = rollDice(2);
+	//let blockedDamage = 0;
 	if (probabilityOfBlock >= 2) {
 		console.log("You blocked the attack!");
 	}
 	else {
 		console.log("Rekt m8 :(");
 	}
+}
+
+function breakArmor (obj) { //call it within block?
+	let thePlayerArmor = obj.armor;
+	let probabilityOfArmorBreaking = rollDice(4);
+	 if (probabilityOfArmorBreaking >= 4) {
+	 	console.log("Your armor has broken, check stats!");
+	 }
+	 else {
+	 	console.log("Your armor did not break! =]")
+	 }
 }
 
 // function armorBreak(){
