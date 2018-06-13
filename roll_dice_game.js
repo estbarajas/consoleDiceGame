@@ -1,11 +1,11 @@
 function runGame () {
-	console.log("Adventures of a brave WARRIOR!\n\n");
 	introDialogue();
 	combat();
 }
 
 function introDialogue () {
 	let continueDialogue = true;
+	console.log("Adventures of a brave WARRIOR!\n\n");
 	while (continueDialogue) {
 		console.log("What destination would you like to travel too?");
 		let destination = prompt("A) Rocky hills\nB) Elemental square\nC) Dark caves").toLowerCase();
@@ -72,13 +72,9 @@ function combat () {
 			let decisionToAttack = prompt("A) Yes, attack enemy!\nB) Not yet, check stats.\n").toLowerCase();
 			
 			if (decisionToAttack === "a") {
-				console.log("You attacked.");
-				//console.log("Health before attack:" + theMonster.health);
-				console.log(theMonster);
+				let initialMonsterHealth = theMonster.health;
 				theMonster.health = attack(theMonster, thePlayer.damage);
-				console.log("------------");
-				//console.log("Health after attack:" + theMonster.health);
-				console.log(theMonster);
+				console.log("The " + theMonster.name + " has " + theMonster.health + "/" + initialMonsterHealth + " health left.")
 				continueDialogue = false;
 			}
 			else if (decisionToAttack === "b") {
