@@ -35,11 +35,12 @@ function rollDice (numberOfSides) {
 
 function randomMonster () {
 	let monsters = {
-		goblin : {name:"Goblin", health:125, damage:5, gold:20},
-		troll : {name:"Troll", health:135, damage:10, gold:25},
-		mage : {name:"Mage", health:145, damage:15, gold:30,},
+		goblin : {name:"Goblin", health:25, damage:5, gold:rollDice(25)},
+		troll : {name:"Troll", health:35, damage:10, gold:rollDice(30)},
+		mage : {name:"Mage", health:45, damage:15, gold:rollDice(35),},
 	};
 	let monsterArray = [monsters.goblin, monsters.troll, monsters.mage];
+	//let randomMonsterGenerator = Math.floor(Math.random() * monsterArray.length);
 	let randomMonsterGenerator = Math.floor(Math.random() * monsterArray.length);
 	let temporaryMonster = monsterArray[randomMonsterGenerator];
 	//console.log(temporaryMonster);
@@ -47,7 +48,7 @@ function randomMonster () {
 }
 
 function player () {
-	let player = {name:"Warrior", health:100, armor:"Broken", fishPieces:1, gold:2, damage:5};
+	let player = {name:"Warrior", age:rollDice(22) , health:100, armor:"Broken", fishPieces:1, gold:2, damage:5};
 	return player;
 }
 
@@ -206,9 +207,19 @@ function combat () {
 	}
 
 	if (warriorIsDead) {
+		//console.log("Final Stats: ");
+		//console.log(getStats(thePlayer));
+		console.log("Final stats:");
+		getStats(thePlayer);
 		console.log("Game Over, you died in combat.");
 	}
 	else {
+		//onsole.log("Final Stats: ");
+		let goldReward = theMonster.gold;
+		console.log("You earned: " + goldReward + " gold.");
+		thePlayer.gold = thePlayer.gold + goldReward;
+		console.log("Final stats:");
+		getStats(thePlayer);
 		console.log("Game Over, you won the fight!");
 	}
 
