@@ -35,9 +35,9 @@ function rollDice (numberOfSides) {
 
 function randomMonster () {
 	let monsters = {
-		goblin : {name:"Goblin", health:25, damage:5, gold:rollDice(25)},
-		troll : {name:"Troll", health:35, damage:10, gold:rollDice(30)},
-		mage : {name:"Mage", health:45, damage:15, gold:rollDice(35),},
+		goblin : {name:"Goblin", health:125, damage:5, gold:rollDice(25)},
+		troll : {name:"Troll", health:135, damage:10, gold:rollDice(30)},
+		mage : {name:"Mage", health:145, damage:15, gold:rollDice(35),},
 	};
 	let monsterArray = [monsters.goblin, monsters.troll, monsters.mage];
 	//let randomMonsterGenerator = Math.floor(Math.random() * monsterArray.length);
@@ -48,7 +48,7 @@ function randomMonster () {
 }
 
 function player () {
-	let player = {name:"Warrior", age:rollDice(22) , health:100, armor:"Broken", fishPieces:1, gold:2, damage:5};
+	let player = {name:"Warrior", age:rollDice(22) , health:70, armor:"Broken", fishPieces:3, gold:5, damage:5};
 	return player;
 }
 
@@ -102,10 +102,9 @@ function combat () {
 		while (defensivePlayDialogue) {
 			console.log("Warning: The " + theMonster.name + " is charging an attack...\n\n");
 			
-			
 			while (defensiveInnerLoop) {
 				console.log("What would you like to do?");
-				let defensiveDecision = prompt("A) Attempt to block attack.\nB) Eat fish to heal.\nC) Repair Armor.\nD) Nothing.").toLowerCase();
+				let defensiveDecision = prompt("A) Attempt to block attack.\nB) Eat fish to heal.\n").toLowerCase();
 
 				if (defensiveDecision === "a") {
 					console.log("Chose option to attempt to Block.");
@@ -177,23 +176,55 @@ function combat () {
 						break;
 					}
 					else {
-						console.log("\nBlock failed, this is going to hurt.")
-						//console.log("Do the monster attack here.");
+						console.log("\nBlock failed, this is going to hurt.");
+						console.log("You were attacked.");
+						thePlayer.health = attack(thePlayer, theMonster.damage);
+							if (!(thePlayer.health <= 0)) {
+								console.log("The " + thePlayer.name + " has " + thePlayer.health + " health left.");
+							}
+							else {
+									console.log("Warrior is dead.");
+									warriorIsDead = true;
+									monsterNotDead = false;
+									offensivePlayDialogue = false;
+									defensivePlayDialogue = false;
+									defensiveInnerLoop = false;
+								}
 						break;
 					}
 
 					break;
 				}
 				else if (defensiveDecision === "b") {
-					console.log("Choose option B.");
-					break;
-				}
-				else if (defensiveDecision === "c") {
-					console.log("Choose option C.");
-					break;
-				}
-				else if (defensiveDecision === "d") {
-					console.log("Choose option D.");
+					if(thePlayer.health < 100 && thePlayer.fishPieces > 0) {
+						thePlayer.health = thePlayer.health + useFish(thePlayer);
+						thePlayer.fishPieces --;
+						//console.log("You have: " + thePLayer.fishPieces + "left.");
+						if (thePlayer.health >= 100) {
+							console.log("Full Health.");
+							thePlayer.health = 100;
+						}
+						//break;
+					}
+					else if (thePlayer.fishPieces <= 0) {
+						console.log("No fish left.")
+					}
+					else {
+						console.log("...");
+					}
+					console.log("\nYou were attacked.")
+					thePlayer.health = attack(thePlayer, theMonster.damage);
+							if (!(thePlayer.health <= 0)) {
+								console.log("The " + thePlayer.name + " has " + thePlayer.health + " health left.");
+							}
+							else {
+									console.log("Warrior is dead.");
+									warriorIsDead = true;
+									monsterNotDead = false;
+									offensivePlayDialogue = false;
+									defensivePlayDialogue = false;
+									defensiveInnerLoop = false;
+								}
 					break;
 				}
 				else {
@@ -209,6 +240,7 @@ function combat () {
 	if (warriorIsDead) {
 		//console.log("Final Stats: ");
 		//console.log(getStats(thePlayer));
+		thePlayer.health = 0;
 		console.log("Final stats:");
 		getStats(thePlayer);
 		console.log("Game Over, you died in combat.");
@@ -222,58 +254,33 @@ function combat () {
 		getStats(thePlayer);
 		console.log("Game Over, you won the fight!");
 	}
-
-	//console.log("\nExited succesfully.");
-
-
-	//console.log(thePlayer);
-	//console.log("Name: " + thePlayer.name);
-	//console.log("Health: " + thePlayer.health);
-	
-	// useFish()
-	// thePlayer.health = useFish(thePlayer);
-
-	// buyFish()
-	// thePlayer.fishPieces = buyFish(thePlayer);
-
-	//checkStats()
-	//checkStats(thePlayer);	
-
-	//attack()
-	//theMonster.health = attack(theMonster);
-
-	//block()
-	//block(thePlayer);
-
-	//breakArmor()
-	//breakArmor(thePlayer);
 }
 
-function buyFish (obj) { //to do: lower players gold randomly
+function buyFish (obj) { 
 	let thePlayerFishPieces = obj.fishPieces;
 	thePlayerFishPieces += 1;
 	return thePlayerFishPieces;
 }
 
-function useFish (obj) { //to do: make health increase random with rollDice()
+function useFish (obj) { 
 	let thePlayerHealth = obj.health;
-	thePlayerHealth += 55;
-	return thePlayerHealth;
+	let theRandomHealAmount = rollDice(6);
+	thePlayerHealth += theRandomHealAmount;
+	console.log("Ate a fish and it healed: " + theRandomHealAmount + " points.");
+	return theRandomHealAmount;
 }
 
-function getStats (obj) { //fix armor status
+function getStats (obj) { 
 	let theObject = obj;
-
 	if(theObject.name === "Warrior") {
-		console.log("Warrior stats (You): " + "Health points: " + theObject.health + " | Fish pieces: " + theObject.fishPieces + " | Gold owned: "  + theObject.gold + " | Armor status: " + theObject.armor);
+		console.log("Warrior stats (You): " + "Health points: " + theObject.health + " | Age: " + theObject.age + " | Fish pieces: " + theObject.fishPieces + " | Gold owned: "  + theObject.gold + " | Armor status: " + theObject.armor);
 	}
 	else {
 		console.log(theObject.name + " stats: " + "Health points: " + theObject.health + " | Base Damage: " + theObject.damage + " | Gold drop: " + theObject.gold);
 	}
-	
 }
 
-function attack (obj, damage) { //if monster less dmg then warrior
+function attack (obj, damage) {
 	let theAttackerHealth = obj.health;
 	let baseDamage = damage;
 	let bonusDamage = rollDice(10);
@@ -283,12 +290,12 @@ function attack (obj, damage) { //if monster less dmg then warrior
 	return theAttackerHealth;
 }
 
-function block () { //return it onto the attack calculation!! blocked dmg to cancel attack...
+function block () { 
 	let probabilityOfBlock = rollDice(2);
 	return probabilityOfBlock;
 }
 
-function breakArmor () { //call it within block? possibly return boolean?
+function breakArmor () { 
 	let probabilityOfArmorBreaking = rollDice(4);
 	let brokenOrFixed = "Intact";
 	 if (probabilityOfArmorBreaking >= 4) {
