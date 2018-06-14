@@ -47,7 +47,7 @@ function randomMonster () {
 }
 
 function player () {
-	let player = {name:"Warrior", health:100, armor:10, fishPieces:1, gold:10, damage:5};
+	let player = {name:"Warrior", health:100, armor:"Broken", fishPieces:1, gold:2, damage:5};
 	return player;
 }
 
@@ -58,6 +58,7 @@ function combat () {
 	let offensivePlayDialogue = true;
 	let defensivePlayDialogue = true;
 	let defensiveInnerLoop = true;
+	let warriorIsDead = false;
 
 	console.log("Warning: "+ "A " + theMonster.name + " has spawned!\n\n");
 	//getStats(theMonster);
@@ -69,14 +70,15 @@ function combat () {
 			let decisionToAttack = prompt("A) Yes, attack enemy!\nB) Not yet, check stats.\n").toLowerCase();
 
 			if (decisionToAttack === "a") {
-				let initialMonsterHealth = theMonster.health;
+				//let initialMonsterHealth = theMonster.health;
+				//let finalMonsterHealth = initialMonsterHealth;
 				theMonster.health = attack(theMonster, thePlayer.damage);
 				if (!(theMonster.health <= 0)) {
-					console.log("The " + theMonster.name + " has " + theMonster.health + "/" + initialMonsterHealth + " health left.\n\n");
+					console.log("The " + theMonster.name + " has " + theMonster.health + " health left.\n\n");
 					break;
 				}
 				else {
-					console.log("The " + theMonster.name + " is dead!");
+					console.log("The " + theMonster.name + " is dead!\n\n");
 					monsterNotDead = false;
 					offensivePlayDialogue = false;
 					defensivePlayDialogue = false;
@@ -105,7 +107,80 @@ function combat () {
 				let defensiveDecision = prompt("A) Attempt to block attack.\nB) Eat fish to heal.\nC) Repair Armor.\nD) Nothing.").toLowerCase();
 
 				if (defensiveDecision === "a") {
-				console.log("Choose option A.");
+					console.log("Chose option to attempt to Block.");
+					if(thePlayer.armor === "Broken") {
+						console.log("\nCan't block with broken armor. Would you like to fix it for 3 gold?");
+						let fixArmorQuestion = prompt("A) Yes\nB) No").toLowerCase();
+						if (fixArmorQuestion === "a"){
+							if (thePlayer.gold >= 3){
+								thePlayer.gold = thePlayer.gold - 3;
+								thePlayer.armor = "Intact";
+								console.log("Update: Armor has been repaired.");
+							}
+							else {
+								console.log("Not enough gold to repair.\n\n");
+								//console.log("You took X damage!");
+								console.log("Ouch! You were attacked.");
+								thePlayer.health = attack(thePlayer, theMonster.damage);
+								if (!(thePlayer.health <= 0)) {
+									console.log("The " + thePlayer.name + " has " + thePlayer.health + " health left.");
+								}
+								else {
+									console.log("Warrior is dead.");
+									warriorIsDead = true;
+									monsterNotDead = false;
+									offensivePlayDialogue = false;
+									defensivePlayDialogue = false;
+									defensiveInnerLoop = false;
+								}
+							}
+						}
+						else if (fixArmorQuestion === "b") {
+							console.log("Did not repair armor.\n\n");
+							//console.log("You took Y damage!");
+							console.log("Ouch! You were attacked.");
+							thePlayer.health = attack(thePlayer, theMonster.damage);
+							if (!(thePlayer.health <= 0)) {
+								console.log("The " + thePlayer.name + " has " + thePlayer.health + " health left.");
+							}
+							else {
+									console.log("Warrior is dead.");
+									warriorIsDead = true;
+									monsterNotDead = false;
+									offensivePlayDialogue = false;
+									defensivePlayDialogue = false;
+									defensiveInnerLoop = false;
+								}
+						}
+						else {
+							console.log("Wrong input. You unexpectedly are attacked.\n\n");
+							//console.log("You took Z damage.")
+							thePlayer.health = attack(thePlayer, theMonster.damage);
+							if (!(thePlayer.health <= 0)) {
+								console.log("The " + thePlayer.name + " has " + thePlayer.health + " health left.");
+							}
+							else {
+									console.log("Warrior is dead.");
+									warriorIsDead = true;
+									monsterNotDead = false;
+									offensivePlayDialogue = false;
+									defensivePlayDialogue = false;
+									defensiveInnerLoop = false;
+								}
+						}
+					}
+					else if ((block() >= 2)) { 
+						console.log("\nSuccesful block, you receive no damage.");
+						thePlayer.armor = breakArmor();
+						console.log("Armor status: " + thePlayer.armor);
+						break;
+					}
+					else {
+						console.log("\nBlock failed, this is going to hurt.")
+						//console.log("Do the monster attack here.");
+						break;
+					}
+
 					break;
 				}
 				else if (defensiveDecision === "b") {
@@ -130,7 +205,14 @@ function combat () {
 		}
 	}
 
-	console.log("Exited succesfully.");
+	if (warriorIsDead) {
+		console.log("Game Over, you died in combat.");
+	}
+	else {
+		console.log("Game Over, you won the fight!");
+	}
+
+	//console.log("\nExited succesfully.");
 
 
 	//console.log(thePlayer);
@@ -172,7 +254,7 @@ function getStats (obj) { //fix armor status
 	let theObject = obj;
 
 	if(theObject.name === "Warrior") {
-		console.log("Warrior stats (You): " + "Health points: " + theObject.health + " | Fish pieces: " + theObject.fishPieces + " | Gold owned: "  + theObject.gold + " | Armor status: Broken");
+		console.log("Warrior stats (You): " + "Health points: " + theObject.health + " | Fish pieces: " + theObject.fishPieces + " | Gold owned: "  + theObject.gold + " | Armor status: " + theObject.armor);
 	}
 	else {
 		console.log(theObject.name + " stats: " + "Health points: " + theObject.health + " | Base Damage: " + theObject.damage + " | Gold drop: " + theObject.gold);
@@ -192,24 +274,20 @@ function attack (obj, damage) { //if monster less dmg then warrior
 
 function block () { //return it onto the attack calculation!! blocked dmg to cancel attack...
 	let probabilityOfBlock = rollDice(2);
-	//let blockedDamage = 0;
-	if (probabilityOfBlock >= 2) {
-		console.log("You blocked the attack!");
-	}
-	else {
-		console.log("Rekt m8 :(");
-	}
+	return probabilityOfBlock;
 }
 
-function breakArmor (obj) { //call it within block? possibly return boolean?
-	let thePlayerArmor = obj.armor;
+function breakArmor () { //call it within block? possibly return boolean?
 	let probabilityOfArmorBreaking = rollDice(4);
+	let brokenOrFixed = "Intact";
 	 if (probabilityOfArmorBreaking >= 4) {
-	 	console.log("Your armor has broken, check stats!");
+	 	console.log("Your armor has broken, from the impact. Can't block again before repairing.");
+	 	brokenOrFixed = "Broken";
 	 }
 	 else {
-	 	console.log("Your armor did not break! =]")
+	 	console.log("Your armor did not break from the impact. Can continue to attempt blocking attacks.");
 	 }
+	 return brokenOrFixed;
 }
 
 runGame();
